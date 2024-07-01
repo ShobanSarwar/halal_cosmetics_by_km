@@ -1,0 +1,210 @@
+{% load static %}
+{% load my_custom_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halal Cosmetics By KM</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdfdfd;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            /* flex: 1 1 calc(25% - 20px); */
+            /* max-width: calc(25% - 20px); */
+            max-width: 194px;
+            margin: 0 auto;
+            padding: 0px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            position: relative;
+            top: 0px;
+            left: 20px;
+            overflow: hidden;
+            /* Ensures content does not overflow */
+            display: block;
+        }
+
+        .container img {
+            width: 100%;
+            height: 130px;
+            /* Maintains the aspect ratio */
+            display: block;
+            /* Removes any extra space below the image */
+        }
+
+        .products-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0px;
+            gap: -10px;
+            /* Space between items */
+        }
+
+        .container h2,
+        .container p {
+            margin: 10px;
+            text-align: center;
+        }
+
+        .container .btn {
+            width: 90%;
+            margin: 5px;
+            margin-left: 5px;
+            text-align: center;
+        }
+
+
+        .corner-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .navbar-custom {
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .navbar-custom .overlay {
+            position: absolute;
+            top: 0px;
+            left: 235px;
+            width: 64%;
+            /* Adjust the width as needed */
+            height: 100%;
+            background-image: url("{% static 'images/logo.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        /* Example styles for navigation bar */
+        .navbar {
+            background-color: #f3eeee;
+            overflow: hidden;
+            scroll-behavior: smooth;
+            shape-rendering: unset;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-color: white;
+        }
+
+        .navbar ul li {
+            float: left;
+        }
+
+        .navbar ul li a {
+            display: block;
+            color: rgb(2, 2, 2);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #686666;
+            color: rgb(8, 8, 8);
+        }
+
+        /* .navbar-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .navbar-logo img {
+            height: 50px;
+
+        } */
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="overlay"></div>
+        <a class="navbar-brand" href="{% url 'home' %}">Halal Cosmetics By KM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_product' %}">Add Product</a>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- <nav class="navbar">
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="#">Home</a></li>
+            <li class="navbar-item"><a href="#">About</a></li>
+            <li class="navbar-item"><a href="#">Contact</a></li>
+        </ul>
+        <div class="navbar-logo">
+            <img src="/images/logo.png" alt="Logo">
+        </div>
+        <ul class="navbar-list">
+            <li class="navbar-item"><a href="#">Services</a></li>
+            <li class="navbar-item"><a href="#">Blog</a></li>
+            <li class="navbar-item"><a href="#">Shop</a></li>
+        </ul>
+    </nav> -->
+    <h1>Products</h1>
+    <div class="row">
+        <div class="products-grid">
+            {% for product in products %}
+            <!-- <div class="col-md-4 mb-4"> -->
+            <!-- <div class="card"> -->
+            <div class="container">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <!-- <p class="card-text">{{ product.description }}</p> -->
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                <a href="{% url 'delete_product' product.id %}" class="btn btn-danger"><i
+                        class="fa fa-trash"></i>Delete</a>
+            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- <a href="{% url 'add_product' %}" class="corner-button">Add Product</a> -->
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
